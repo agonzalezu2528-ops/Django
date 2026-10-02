@@ -1,20 +1,10 @@
 # reportes/urls.py
-"""URLs de la app reportes — W01 (mínimo funcional)."""
+"""URLs de la app reportes — W02."""
 from django.urls import path
-from django.http import HttpResponse
+from . import views
 
 app_name = 'reportes'
 
-
-def bienvenida_reportes(request):
-    """Vista temporal de bienvenida para la app reportes."""
-    return HttpResponse(
-        "<h2>📦 Módulo reportes</h2>"
-        "<p>En construcción — Espiral 2 (W04)</p>",
-        content_type='text/html; charset=utf-8'
-    )
-
-
 urlpatterns = [
-    path('', bienvenida_reportes, name='inicio'),
+    path('', views.index, name='inicio'),
 ]
