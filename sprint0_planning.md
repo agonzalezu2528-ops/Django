@@ -30,7 +30,20 @@ y repositorio en GitHub con al menos 10 commits.
 | Configurar settings.py base | Dev | ✅ | 0.5 h |
 | Crear vista de bienvenida | Dev | ✅ | 0.3 h |
 | product_backlog.md + sprint0_planning.md | Dev | ✅ | 0.5 h |
-| Primer commit en GitHub | Dev | ⏳ | 0.3 h |
+| Primer commit en GitHub | Dev | ✅ | 0.3 h |
+
+## Sprint Backlog — W02 (actualización de estados)
+
+| Tarea | Estado |
+|---|---|
+| Crear templates/base.html con Fable 5 AzulERP | ✅ |
+| Crear 5 plantillas index.html por app | ✅ |
+| Migrar vistas a views.py con render() | ✅ |
+| Configurar WhiteNoise y STATIC_ROOT | ✅ |
+| Crear core/settings_prod.py borrador | ✅ |
+| Actualizar requirements.txt (gunicorn, psycopg2) | ✅ |
+| Crear tests/test_w02_mvt.py — 13 tests OK | ✅ |
+| HU-E1-03 Repositorio GitHub: avance W02 commiteado | ✅ |
 
 ## Criterios de aceptación del Sprint 0
 - python manage.py check → 0 issues
@@ -38,3 +51,4 @@ y repositorio en GitHub con al menos 10 commits.
 - URL pública en Render → HTTP 200 (W03)
 - Repositorio con rama main + historial de commits
 - Ficha Schmelkes E1 completa (W03)
+
