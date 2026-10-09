@@ -47,6 +47,7 @@ if _render_host:
     CSRF_TRUSTED_ORIGINS.append(f'https://{_render_host}')
 
 # ── HEADERS HTTP SEGUROS ───────────────────────────────────────────────────
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT            = True
 SECURE_HSTS_SECONDS            = 31536000    # 1 año
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
