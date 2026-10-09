@@ -32,8 +32,6 @@ RUN python manage.py collectstatic --no-input \
 EXPOSE $PORT
 
 # Comando por defecto: iniciar Gunicorn
-CMD gunicorn core.wsgi \
-    --bind 0.0.0.0:$PORT \
-    --workers 2 \
-    --timeout 120 \
-    --log-file -
+   CMD python manage.py migrate --no-input && \
+       (python manage.py createsuperuser --noinput || true) && \
+       gunicorn core.wsgi --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --log-file -
