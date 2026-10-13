@@ -45,8 +45,8 @@ posterior tenga una URL pública verificable desde el inicio del proyecto.
 
 ## 3. Evidencias generadas
 
-- [ ] Repositorio GitHub: `https://github.com/tu-usuario/erp-django-utec`
-- [ ] URL pública Render: `https://erp-django-utec.onrender.com`
+- [ ] Repositorio GitHub: `https://github.com/agonzalezu2528-ops`
+- [ ] URL pública Render: `https://erp-django-utec-ymku.onrender.com`
 - [ ] Captura de pantalla: `evidencias/espiral_01/render_url.png`
 - [ ] Captura de pantalla: `evidencias/espiral_01/manage_check.png`
 - [ ] Resultado de tests: `Ran 33 tests in X.XXXs — OK`
