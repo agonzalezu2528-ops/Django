@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0A2342">
-    <title>{% block title %}ERP Django{% endblock %} · UTEC Celaya</title>
+    <title>{% block title %}ERP Django{% endblock %} Â· UTEC Celaya</title>
 
     <!-- Google Fonts: Playfair Display + Inter + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,9 +16,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
-    <!-- Fable 5 AzulERP — Design System -->
+    <!-- Fable 5 AzulERP â€” Design System -->
     <style>
-        /* TOKENS MODO DÍA */
+        /* TOKENS MODO DÃA */
         :root, [data-theme="light"] {
             --clr-navy   : #0A2342;
             --clr-royal  : #1B4F8A;
@@ -227,7 +227,7 @@
             padding: 1rem 1.25rem;
         }
 
-        /* TÍTULO DE PÁGINA */
+        /* TÃTULO DE PÃGINA */
         .erp-page-title {
             display: flex; align-items: center; gap: 1rem;
             margin-bottom: 1.5rem; padding-bottom: .75rem;
@@ -239,7 +239,7 @@
         }
         [data-theme="dark"] .erp-page-title h2 { color: var(--clr-sky); }
 
-        /* CÓDIGO */
+        /* CÃ“DIGO */
         code, .mono {
             font-family: 'JetBrains Mono',Consolas,monospace;
             font-size: .85em; color: var(--clr-royal);
@@ -263,15 +263,15 @@
 
 <!-- NAVBAR -->
 <nav class="erp-navbar">
-    <a class="erp-brand" href="/">📦 ERP Django <span>· UTEC Celaya</span></a>
+    <a class="erp-brand" href="/">ðŸ“¦ ERP Django <span>Â· UTEC Celaya</span></a>
     <div class="erp-nav-links">
-        <a href="{% url 'productos:inicio' %}"
+        <a href="{% url 'productos:lista' %}"
            class="erp-nav-link {% block nav_productos %}{% endblock %}">Productos</a>
-        <a href="{% url 'clientes:inicio' %}"
+        <a href="{% url 'clientes:lista' %}"
            class="erp-nav-link {% block nav_clientes %}{% endblock %}">Clientes</a>
-        <a href="{% url 'proveedores:inicio' %}"
+        <a href="{% url 'proveedores:lista' %}"
            class="erp-nav-link {% block nav_proveedores %}{% endblock %}">Proveedores</a>
-        <a href="{% url 'ventas:inicio' %}"
+        <a href="{% url 'ventas:lista' %}"
            class="erp-nav-link {% block nav_ventas %}{% endblock %}">Ventas</a>
         <a href="{% url 'reportes:inicio' %}"
            class="erp-nav-link {% block nav_reportes %}{% endblock %}">Reportes</a>
@@ -283,7 +283,7 @@
         {% else %}
             <a href="/accounts/login/" class="erp-nav-link">Entrar</a>
         {% endif %}
-        <button class="theme-toggle" id="themeBtn" title="Modo claro/oscuro">🌙</button>
+        <button class="theme-toggle" id="themeBtn" title="Modo claro/oscuro">ðŸŒ™</button>
     </div>
 </nav>
 
@@ -295,7 +295,7 @@
          role="alert">
         <span>{{ m }}</span>
         <button onclick="this.parentElement.style.display='none'"
-                style="background:none;border:none;cursor:pointer;font-size:1.1rem;color:inherit;">×</button>
+                style="background:none;border:none;cursor:pointer;font-size:1.1rem;color:inherit;">Ã—</button>
     </div>
     {% endfor %}
 </div>
@@ -310,7 +310,7 @@
 
 <!-- FOOTER -->
 <footer class="erp-footer">
-    ERP Django · Django 4.2 LTS · Fable 5 AzulERP · UTEC Celaya · Espiral 1
+    ERP Django Â· Django 4.2 LTS Â· Fable 5 AzulERP Â· UTEC Celaya Â· Espiral 1
 </footer>
 
 <!-- Bootstrap JS -->
@@ -321,7 +321,7 @@
 (function () {
     var btn   = document.getElementById('themeBtn');
     var html  = document.documentElement;
-    var icons = { light: '🌙', dark: '☀️' };
+    var icons = { light: 'ðŸŒ™', dark: 'â˜€ï¸' };
     var saved = localStorage.getItem('erpTheme') || 'light';
     html.setAttribute('data-theme', saved);
     if (btn) btn.textContent = icons[saved];

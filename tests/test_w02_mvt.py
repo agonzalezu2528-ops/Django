@@ -1,4 +1,4 @@
-"""Suite de pruebas W02 — Patrón MVT: templates, vistas y estáticos.
+﻿"""Suite de pruebas W02 â€” PatrÃ³n MVT: templates, vistas y estÃ¡ticos.
 
 Ejecutar con:
     python manage.py test tests.test_w02_mvt --verbosity=2
@@ -21,33 +21,33 @@ class TemplatesRenderTest(TestCase):
         self.assertTemplateUsed(response, 'bienvenida.html')
 
     def test_bienvenida_extiende_base(self):
-        """La página de inicio debe extender base.html."""
+        """La pÃ¡gina de inicio debe extender base.html."""
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'base.html')
 
     def test_productos_usa_template_correcto(self):
         """La vista de productos debe usar productos/index.html."""
-        response = self.client.get(reverse('productos:inicio'))
+        response = self.client.get(reverse('productos:lista'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'productos/index.html')
+        self.assertTemplateUsed(response, 'productos/lista.html')
 
     def test_clientes_usa_template_correcto(self):
         """La vista de clientes debe usar clientes/index.html."""
-        response = self.client.get(reverse('clientes:inicio'))
+        response = self.client.get(reverse('clientes:lista'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'clientes/index.html')
+        self.assertTemplateUsed(response, 'clientes/lista.html')
 
     def test_proveedores_usa_template_correcto(self):
         """La vista de proveedores debe usar proveedores/index.html."""
-        response = self.client.get(reverse('proveedores:inicio'))
+        response = self.client.get(reverse('proveedores:lista'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'proveedores/index.html')
+        self.assertTemplateUsed(response, 'proveedores/lista.html')
 
     def test_ventas_usa_template_correcto(self):
         """La vista de ventas debe usar ventas/index.html."""
-        response = self.client.get(reverse('ventas:inicio'))
+        response = self.client.get(reverse('ventas:lista'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'ventas/index.html')
+        self.assertTemplateUsed(response, 'ventas/lista.html')
 
     def test_reportes_usa_template_correcto(self):
         """La vista de reportes debe usar reportes/index.html."""
@@ -66,17 +66,17 @@ class ContextoBienvenidaTest(TestCase):
                       "El contexto debe incluir la lista 'modulos'")
 
     def test_contexto_tiene_seis_modulos(self):
-        """El contexto debe contener exactamente 6 módulos."""
+        """El contexto debe contener exactamente 6 mÃ³dulos."""
         response = self.client.get('/')
         modulos = response.context.get('modulos', [])
         self.assertEqual(
             len(modulos), 6,
-            f"Se esperaban 6 módulos, se encontraron {len(modulos)}"
+            f"Se esperaban 6 mÃ³dulos, se encontraron {len(modulos)}"
         )
 
 
 class StaticFilesConfigTest(TestCase):
-    """Verifica la configuración de archivos estáticos y WhiteNoise."""
+    """Verifica la configuraciÃ³n de archivos estÃ¡ticos y WhiteNoise."""
 
     def test_static_url_es_slash_static(self):
         """STATIC_URL debe ser '/static/'."""
@@ -87,7 +87,7 @@ class StaticFilesConfigTest(TestCase):
         """STATIC_ROOT debe estar definido."""
         from django.conf import settings
         self.assertTrue(bool(settings.STATIC_ROOT),
-                        "STATIC_ROOT no está configurado")
+                        "STATIC_ROOT no estÃ¡ configurado")
 
     def test_whitenoise_en_middleware(self):
         """WhiteNoise debe estar en MIDDLEWARE."""
@@ -95,11 +95,11 @@ class StaticFilesConfigTest(TestCase):
         self.assertIn(
             'whitenoise.middleware.WhiteNoiseMiddleware',
             settings.MIDDLEWARE,
-            "WhiteNoise no está en MIDDLEWARE"
+            "WhiteNoise no estÃ¡ en MIDDLEWARE"
         )
 
     def test_whitenoise_despues_de_security(self):
-        """WhiteNoise debe ir DESPUÉS de SecurityMiddleware."""
+        """WhiteNoise debe ir DESPUÃ‰S de SecurityMiddleware."""
         from django.conf import settings
         m = settings.MIDDLEWARE
         idx_sec = m.index('django.middleware.security.SecurityMiddleware')
