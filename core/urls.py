@@ -24,6 +24,7 @@ from . import views
 
 urlpatterns = [
     path('admin/',       admin.site.urls),
+    path('accounts/',     include('django.contrib.auth.urls')),
     path('',             views.bienvenida,             name='inicio'),
     path('clientes/',    include('clientes.urls',    namespace='clientes')),
     path('proveedores/', include('proveedores.urls', namespace='proveedores')),

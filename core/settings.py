@@ -200,3 +200,5 @@ JAZZMIN_UI_TWEAKS = {
         'success':   'btn-success',
     },
 }
+
+LOGIN_REDIRECT_URL = '/'

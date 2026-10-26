@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Iniciar sesión{% endblock %}
+
+{% block content %}
+<div class="erp-page-title"><h2>🔐 Iniciar sesión</h2></div>
+<div class="erp-card" style="max-width:420px;">
+    <form method="post" style="margin-top:.5rem;">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="erp-alert-danger" style="margin-bottom:1rem;">Usuario o contraseña incorrectos.</div>
+        {% endif %}
+        {% for field in form %}
+        <div class="mb-4">
+            <label class="erp-label">{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <button type="submit" class="btn-erp-gold">Entrar</button>
+    </form>
+</div>
+{% endblock %}
