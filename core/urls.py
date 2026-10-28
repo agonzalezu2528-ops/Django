@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 # core/urls.py
-"""Enrutador principal del ERP Django — W01."""
+"""Enrutador principal del ERP Django — W09."""
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -24,8 +24,10 @@ from . import views
 
 urlpatterns = [
     path('admin/',       admin.site.urls),
-    path('accounts/',     include('django.contrib.auth.urls')),
     path('',             views.bienvenida,             name='inicio'),
+    # Allauth (login / logout / registro)
+    path('accounts/',    include('allauth.urls')),     # ← agregar
+    # Apps del ERP
     path('clientes/',    include('clientes.urls',    namespace='clientes')),
     path('proveedores/', include('proveedores.urls', namespace='proveedores')),
     path('productos/',   include('productos.urls',   namespace='productos')),

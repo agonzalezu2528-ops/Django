@@ -1,13 +1,13 @@
 ﻿# core/views.py
-"""Vistas principales del proyecto ERP â€” W02.
-MigraciÃ³n: HttpResponse â†’ render() con templates y contexto.
+"""Vistas principales del proyecto ERP — W02.
+Migración: HttpResponse → render() con templates y contexto.
 """
 from django.shortcuts import render
 from django.urls import reverse
 
 
 def bienvenida(request):
-    """PÃ¡gina de inicio del ERP con tarjetas de mÃ³dulos.
+    """Página de inicio del ERP con tarjetas de módulos.
 
     Context:
         modulos (list): Lista de dicts con icono, nombre, url y descripcion.
@@ -18,39 +18,39 @@ def bienvenida(request):
     modulos = [
         {
             'nombre': 'Productos',
-            'icono': 'ðŸ“¦',
+            'icono': '📦',
             'url': reverse('productos:lista'),
             'descripcion': 'Inventario, precios y stock',
         },
         {
             'nombre': 'Clientes',
-            'icono': 'ðŸ‘¥',
+            'icono': '👥',
             'url': reverse('clientes:lista'),
-            'descripcion': 'Cartera y gestiÃ³n de clientes',
+            'descripcion': 'Cartera y gestión de clientes',
         },
         {
             'nombre': 'Proveedores',
-            'icono': 'ðŸ­',
+            'icono': '🏭',
             'url': reverse('proveedores:lista'),
             'descripcion': 'Red de proveedores',
         },
         {
             'nombre': 'Ventas',
-            'icono': 'ðŸ’°',
+            'icono': '💰',
             'url': reverse('ventas:lista'),
             'descripcion': 'Pedidos, facturas y cobros',
         },
         {
             'nombre': 'Reportes',
-            'icono': 'ðŸ“Š',
+            'icono': '📊',
             'url': reverse('reportes:inicio'),
-            'descripcion': 'Dashboard y analÃ­tica',
+            'descripcion': 'Dashboard y analítica',
         },
         {
             'nombre': 'Admin',
-            'icono': 'âš™ï¸',
+            'icono': '⚙️',
             'url': '/admin/',
-            'descripcion': 'Panel de administraciÃ³n Django',
+            'descripcion': 'Panel de administración Django',
         },
     ]
     return render(request, 'bienvenida.html', {'modulos': modulos})
