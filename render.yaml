@@ -1,34 +1,46 @@
-# render.yaml
-# Documentación: https://render.com/docs/infrastructure-as-code
+# render.yaml — Blueprint de Render (alcance W12: web Docker + PostgreSQL)
+# Documentación: https://render.com/docs/blueprint-spec
+#
+# Fuera de alcance hasta su semana (no tienen código todavía):
+#   W13+  Stripe / SendGrid (variables de entorno)
+#   W16+  Redis, Celery worker/beat, Flower
+#         Nota: Render NO tiene plan gratuito para background workers.
 
 services:
   - type: web
-    name: erp-django-utec
-    env: python
-    plan: free                     # plan gratuito para desarrollo académico
-    region: oregon                 # us-west región gratuita de Render
-    branch: main
-    buildCommand: |
-      pip install -r requirements.txt
-      python manage.py collectstatic --no-input
-      python manage.py migrate
-    startCommand: gunicorn core.wsgi --workers 2 --timeout 120 --log-file -
-    healthCheckPath: /
+    name: erp-django-utec            # debe coincidir con el servicio en Render
+    runtime: docker                 # imagen con Pango/Cairo para WeasyPrint
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    region: oregon
+    healthCheckPath: /              # pública; responde sin login
+    # El ENTRYPOINT del Dockerfile migra, recolecta estáticos y arranca
+    # Gunicorn en 0.0.0.0:$PORT, así que no hace falta startCommand.
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: core.settings_prod
       - key: SECRET_KEY
-        generateValue: true        # Render genera una clave aleatoria segura
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
       - key: DATABASE_URL
         fromDatabase:
           name: erp-django-db
           property: connectionString
-      - key: PYTHON_VERSION
-        value: "3.11.9"
+      # Media en S3 (W11, opcional). Sin bucket se usa el disco efímero.
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_STORAGE_BUCKET_NAME
+        sync: false
 
 databases:
   - name: erp-django-db
+    plan: free
+    region: oregon
     databaseName: erp_db
     user: erp_user
-    plan: free                     # PostgreSQL gratuito en Render (90 días)
-    region: oregon

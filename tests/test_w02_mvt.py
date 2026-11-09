@@ -21,7 +21,7 @@ class TemplatesRenderTest(TestCase):
         self.assertTemplateUsed(response, 'bienvenida.html')
 
     def test_bienvenida_extiende_base(self):
-        """La pÃ¡gina de inicio debe extender base.html."""
+        """La página de inicio debe extender base.html."""
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'base.html')
 
@@ -66,17 +66,17 @@ class ContextoBienvenidaTest(TestCase):
                       "El contexto debe incluir la lista 'modulos'")
 
     def test_contexto_tiene_seis_modulos(self):
-        """El contexto debe contener exactamente 6 mÃ³dulos."""
+        """El contexto debe contener exactamente 6 módulos."""
         response = self.client.get('/')
         modulos = response.context.get('modulos', [])
         self.assertEqual(
             len(modulos), 6,
-            f"Se esperaban 6 mÃ³dulos, se encontraron {len(modulos)}"
+            f"Se esperaban 6 módulos, se encontraron {len(modulos)}"
         )
 
 
 class StaticFilesConfigTest(TestCase):
-    """Verifica la configuraciÃ³n de archivos estÃ¡ticos y WhiteNoise."""
+    """Verifica la configuración de archivos estáticos y WhiteNoise."""
 
     def test_static_url_es_slash_static(self):
         """STATIC_URL debe ser '/static/'."""
@@ -87,7 +87,7 @@ class StaticFilesConfigTest(TestCase):
         """STATIC_ROOT debe estar definido."""
         from django.conf import settings
         self.assertTrue(bool(settings.STATIC_ROOT),
-                        "STATIC_ROOT no estÃ¡ configurado")
+                        "STATIC_ROOT no está configurado")
 
     def test_whitenoise_en_middleware(self):
         """WhiteNoise debe estar en MIDDLEWARE."""
@@ -95,11 +95,11 @@ class StaticFilesConfigTest(TestCase):
         self.assertIn(
             'whitenoise.middleware.WhiteNoiseMiddleware',
             settings.MIDDLEWARE,
-            "WhiteNoise no estÃ¡ en MIDDLEWARE"
+            "WhiteNoise no está en MIDDLEWARE"
         )
 
     def test_whitenoise_despues_de_security(self):
-        """WhiteNoise debe ir DESPUÃ‰S de SecurityMiddleware."""
+        """WhiteNoise debe ir DESPUÉS de SecurityMiddleware."""
         from django.conf import settings
         m = settings.MIDDLEWARE
         idx_sec = m.index('django.middleware.security.SecurityMiddleware')

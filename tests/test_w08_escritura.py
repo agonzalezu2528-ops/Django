@@ -15,6 +15,7 @@ from decimal import Decimal
 from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
+from django.contrib.auth.models import Permission
 
 from clientes.models    import Cliente
 from productos.models   import Categoria, Producto

@@ -37,7 +37,7 @@ DATABASES = {
     'default': dj_database_url.config(
         conn_max_age=600,          # conexiones persistentes 10 min
         conn_health_checks=True,   # verifica conexión antes de usarla
-        ssl_require=True,          # Render requiere SSL en PostgreSQL
+        ssl_require=os.environ.get('DATABASE_SSL_REQUIRE', 'True') == 'True',          # Render requiere SSL en PostgreSQL
     )
 }
 
@@ -48,15 +48,38 @@ if _render_host:
 
 # ── HEADERS HTTP SEGUROS ───────────────────────────────────────────────────
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT            = True
+SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'True') == 'True'
 SECURE_HSTS_SECONDS            = 31536000    # 1 año
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD            = True
-SESSION_COOKIE_SECURE          = True
-CSRF_COOKIE_SECURE             = True
+SESSION_COOKIE_SECURE = os.environ.get('SECURE_SSL_REDIRECT', 'True') == 'True'
+CSRF_COOKIE_SECURE = os.environ.get('SECURE_SSL_REDIRECT', 'True') == 'True'
 X_FRAME_OPTIONS                = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF    = True
 SECURE_REFERRER_POLICY         = 'same-origin'
+
+# ── ALMACENAMIENTO DE ARCHIVOS MEDIA (producción) ─────────────────────────
+# Usar django-storages con S3 para persistir archivos entre deploys.
+# Configurar estas variables en el dashboard de Render:
+#   AWS_ACCESS_KEY_ID       → Access Key del bucket
+#   AWS_SECRET_ACCESS_KEY   → Secret Key del bucket
+#   AWS_STORAGE_BUCKET_NAME → Nombre del bucket
+#   AWS_S3_REGION_NAME      → Región (ej. us-east-1)
+#   AWS_S3_CUSTOM_DOMAIN    → Dominio CDN opcional
+
+_bucket = os.environ.get('AWS_STORAGE_BUCKET_NAME', '')
+
+if _bucket:
+    # Solo activa S3 si la variable de entorno está configurada
+    DEFAULT_FILE_STORAGE  = 'storages.backends.s3boto3.S3Boto3Storage'
+    AWS_ACCESS_KEY_ID     = os.environ.get('AWS_ACCESS_KEY_ID', '')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
+    AWS_STORAGE_BUCKET_NAME = _bucket
+    AWS_S3_REGION_NAME    = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
+    AWS_DEFAULT_ACL       = None        # el bucket controla el acceso
+    AWS_S3_FILE_OVERWRITE = False       # no sobreescribir si el nombre ya existe
+    AWS_QUERYSTRING_AUTH  = False       # URLs públicas (sin firma)
+    MEDIA_URL             = f'https://{_bucket}.s3.amazonaws.com/'
 
 # ── ARCHIVOS ESTÁTICOS ─────────────────────────────────────────────────────
 # WhiteNoise ya configurado en settings.py; solo confirmar almacenamiento
