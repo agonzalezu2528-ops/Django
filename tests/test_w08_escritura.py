@@ -96,6 +96,13 @@ class ProductoEscrituraTest(TestCase):
 
     def test_delete_elimina_producto(self):
         """POST /productos/<id>/eliminar/ → borra el producto y redirige."""
+        # [ADAPTADO] Desde W09/W10 el borrado exige el permiso delete_producto.
+        self.user.user_permissions.add(
+            Permission.objects.get(
+                codename='delete_producto',
+                content_type__app_label='productos',
+            )
+        )
         self.client.force_login(self.user)
         pk = self.prod.pk
         r  = self.client.post(
@@ -184,6 +191,13 @@ class VentaEscrituraTest(TestCase):
 
     def test_post_valido_crea_venta(self):
         """POST válido crea Venta + DetalleVenta y redirige al detalle."""
+        # [ADAPTADO] Desde W09/W10 crear_venta exige el permiso add_venta.
+        self.user.user_permissions.add(
+            Permission.objects.get(
+                codename='add_venta',
+                content_type__app_label='ventas',
+            )
+        )
         self.client.force_login(self.user)
         r = self.client.post(reverse('ventas:crear'), {
             'cliente':         self.cli.pk,

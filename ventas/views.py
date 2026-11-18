@@ -10,7 +10,6 @@ from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
-import weasyprint
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -145,6 +144,7 @@ def _url_fetcher_local(url: str, timeout: int = 10, ssl_context=None):
     FileNotFoundError: WeasyPrint solo registra un aviso y omite la imagen.
     Las URLs externas (p. ej. media en S3) usan el fetcher por defecto.
     """
+    import weasyprint  # import perezoso: solo se necesita al generar el PDF
     parsed = urlparse(url)
     if parsed.scheme in ("http", "https", "file"):
         ruta = _ruta_local(unquote(parsed.path))
@@ -208,6 +208,7 @@ def venta_pdf(request, venta_id: int) -> HttpResponse:
     # ── WeasyPrint: conversión HTML → PDF ─────────────────────────────
     # base_url resuelve rutas relativas como /media/... o /static/...
     # y _url_fetcher_local las lee del disco en vez de pedirlas por HTTP.
+    import weasyprint  # import perezoso
     pdf_bytes = weasyprint.HTML(
         string=html_string,
         base_url=request.build_absolute_uri("/"),

@@ -1,6 +1,10 @@
 """Suite de pruebas W12 — WeasyPrint PDF y exportación Excel.
 
-IMPORTANTE: Estos tests deben ejecutarse dentro del contenedor Docker
+[ADAPTADO] Ya no se usa Docker. Los tests que generan el PDF real se
+omiten automáticamente si WeasyPrint/GTK no cargan (p. ej. Windows) y
+se ejecutan normalmente en Render / Linux.
+
+IMPORTANTE (versión original): Estos tests deben ejecutarse dentro del contenedor Docker
 donde WeasyPrint y sus dependencias nativas están disponibles.
 
 Ejecutar con:
@@ -12,6 +16,7 @@ Resultado esperado:
     Ran 8 tests in X.XXXs
     OK
 """
+import unittest
 from decimal import Decimal
 
 from django.contrib.auth.models import User
@@ -24,6 +29,19 @@ from productos.models     import Categoria, Producto
 from ventas.models        import DetalleVenta, Venta
 
 
+def _weasyprint_disponible() -> bool:
+    """True si WeasyPrint y sus librerías del sistema (Pango/GTK) cargan."""
+    try:
+        import weasyprint  # noqa: F401
+        return True
+    except OSError:
+        return False
+
+
+@unittest.skipUnless(
+    _weasyprint_disponible(),
+    "WeasyPrint/GTK no disponible en este equipo (se ejecuta en Render/Linux)",
+)
 class VentaPDFWeasyPrintTest(TestCase):
     """Tests de la vista venta_pdf — motor WeasyPrint."""
 
