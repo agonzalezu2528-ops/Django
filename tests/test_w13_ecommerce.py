@@ -6,7 +6,7 @@ Ejecutar con:
     python manage.py test tests.test_w13_ecommerce --verbosity=2
 
 Resultado esperado:
-    Ran 9 tests in X.XXXs      # [ADAPTADO] la guía dice 8, pero trae 9 métodos
+    Ran 8 tests in X.XXXs
     OK
 """
 from decimal import Decimal
