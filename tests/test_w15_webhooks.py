@@ -10,17 +10,16 @@ Resultado esperado:
     Ran 8 tests in X.XXXs
     OK
 """
-import json
 from decimal import Decimal
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 from django.test import TestCase
 from django.urls import reverse
 
-from clientes.models    import Cliente
+from clientes.models import Cliente
 from configuracion.models import ConfiguracionERP
-from productos.models   import Categoria, Producto
-from ventas.models      import Pedido
+from productos.models import Categoria, Producto
+from ventas.models import Pedido
 
 
 def _crear_evento(tipo: str, pedido_id: int) -> dict:
