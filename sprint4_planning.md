@@ -9,20 +9,19 @@ actualizando automáticamente el estado del pedido.
 ## Sprint Backlog — actualización W13
 
 | Tarea | Estado |
-|---|---|
-| App catalogo + django-filter | ✅ W13 |
-| ProductoFilter (nombre/categoría/precio) | ✅ W13 |
-| CatalogoView pública con paginación | ✅ W13 |
-| Carrito en sesión (agregar/remover/actualizar/vaciar) | ✅ W13 |
-| Context processor carrito_info | ✅ W13 |
-| Template catalogo.html con tarjetas | ✅ W13 |
-| Template carrito.html con tabla | ✅ W13 |
-| Contador carrito en navbar base.html | ✅ W13 |
-| 8 tests de e-commerce | ✅ W13 |
-| Checkout con Stripe sandbox | ⏳ W14 |
-| Webhooks y estados de pedido | ⏳ W15 |
+## Sprint 4 — Estado final W15
 
-**Total Sprint 4:** 26 puntos
+| HU | Estado | Pts |
+|---|---|---|
+| HU-E5-01 a HU-E5-08 | ✅ Completadas | 26/26 |
+
+## Hito M5 — ALCANZADO ✅
+- Catálogo: /catalogo/ → 200 sin auth con filtros
+- Carrito: agregar/remover/actualizar/vaciar funcional
+- Stripe: tarjeta 4242 → pago exitoso → pedido 'pagado'
+- Webhook: payment_intent.succeeded → stock decrementado
+- Tests: Ran 147 tests → OK
+- Fecha: ___/___/_____
 
 ## DoD — Sprint 4
 - GET /catalogo/ → 200 sin autenticación con lista de productos
