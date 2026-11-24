@@ -17,6 +17,18 @@ services:
       timeout: 5s
       retries: 10
 
+  # ── Redis (broker) — W16 ────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   web:
     build:
       context: .
@@ -31,11 +43,55 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     env_file:
       - .env
     environment:
       DJANGO_SETTINGS_MODULE: core.settings_prod
       DATABASE_URL: postgresql://${POSTGRES_USER:-erp_user}:${POSTGRES_PASSWORD:-erp_pass_local}@db:5432/${POSTGRES_DB:-erp_db}
+      REDIS_URL: redis://redis:6379/0
+      CELERY_EMBEDDED_WORKER: "0"
+
+  # ── Worker de Celery — W16 ──────────────────────────────────────────
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    command: celery -A core worker -l info -Q erp_django
+    volumes:
+      - .:/app
+    depends_on:
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DJANGO_SETTINGS_MODULE: core.settings_prod
+      DATABASE_URL: postgresql://${POSTGRES_USER:-erp_user}:${POSTGRES_PASSWORD:-erp_pass_local}@db:5432/${POSTGRES_DB:-erp_db}
+      REDIS_URL: redis://redis:6379/0
+
+  # ── Flower — Monitor de Celery — W16 (http://localhost:5555) ────────
+  flower:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    command: celery -A core flower --port=5555
+    ports:
+      - "127.0.0.1:5555:5555"
+    depends_on:
+      - redis
+      - celery_worker
+    env_file:
+      - .env
+    environment:
+      DJANGO_SETTINGS_MODULE: core.settings_prod
+      DATABASE_URL: postgresql://${POSTGRES_USER:-erp_user}:${POSTGRES_PASSWORD:-erp_pass_local}@db:5432/${POSTGRES_DB:-erp_db}
+      REDIS_URL: redis://redis:6379/0
 
 volumes:
   postgres_data:

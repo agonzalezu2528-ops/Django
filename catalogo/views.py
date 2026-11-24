@@ -317,15 +317,21 @@ def pago_exitoso(request, pedido_id: int):
 
     Vacía el carrito de la sesión y muestra el número de pedido.
     Stripe redirige aquí después de `stripe.confirmCardPayment` exitoso.
+
+    W16: esta vista NO encola la tarea de correo. La encola el webhook
+    (catalogo/webhook_views.py), que Stripe envía aunque el cliente
+    cierre el navegador y que es idempotente → un solo correo por pedido.
     """
     pedido = get_object_or_404(Pedido, pk=pedido_id)
 
     # Vaciar el carrito al confirmar el pago
     _guardar_carrito(request, {})
+
     messages.success(
         request,
         f'¡Pago exitoso! Tu pedido {pedido.numero_pedido} '
-        f'está confirmado. Total: ${pedido.total_pagado}'
+        f'está confirmado. Total: ${pedido.total_pagado}. '
+        f'Recibirás un correo de confirmación pronto.'
     )
 
     return render(request, 'catalogo/pago_exitoso.html', {
