@@ -109,3 +109,9 @@ LOGGING = {
         },
     },
 }
+
+# ── CORREO (W17): SendGrid vía django-anymail ─────────────────────────────
+# Solo si existe SENDGRID_API_KEY; si no, se conserva el backend de
+# settings.py (consola) y el correo queda en los Logs sin romper nada.
+if SENDGRID_API_KEY:
+    EMAIL_BACKEND = 'anymail.backends.sendgrid.EmailBackend'

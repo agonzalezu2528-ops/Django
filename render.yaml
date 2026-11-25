@@ -42,7 +42,13 @@ services:
         sync: false
       - key: CELERY_EMBEDDED_WORKER  # 1 = worker dentro del contenedor web
         value: "1"
-
+      # W17: correo transaccional con SendGrid  (después de CELERY_EMBEDDED_WORKER)
+      - key: SENDGRID_API_KEY        # SG.xxxx (permiso Mail Send)
+        sync: false
+      - key: DEFAULT_FROM_EMAIL      # ERP Django <sender-verificado@...>
+        sync: false
+      - key: ADMIN_EMAIL             # recibe alertas de stock y errores 500
+        sync: false
 
 databases:
   - name: erp-django-db

@@ -192,6 +192,12 @@ class Pedido(models.Model):
             '"cantidad": 2, "precio": "500.00"}]'
         )
     )
+    # W17: idempotencia del correo de confirmación
+    correo_enviado = models.BooleanField(
+        default=False,
+        verbose_name='Correo de confirmación enviado',
+        help_text='True cuando se envió el correo de confirmación al cliente.'
+    )
 # Agregar dentro de la clase Pedido:
 
     def clean(self) -> None:
